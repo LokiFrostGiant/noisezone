@@ -3,7 +3,10 @@ package com.example.soundboardapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -52,6 +55,7 @@ fun SoundsList(soundList: List<Sounds>, modifier: Modifier = Modifier){
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SoundsCard(sounds: Sounds, modifier: Modifier = Modifier){
     Card(modifier = Modifier.padding(8.dp), elevation = 4.dp) {
@@ -61,7 +65,9 @@ fun SoundsCard(sounds: Sounds, modifier: Modifier = Modifier){
                 contentDescription = stringResource(sounds.stringResourceId),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(194.dp),
+                    .height(194.dp).combinedClickable {
+
+                    },
                 contentScale = ContentScale.Crop
             )
             Text(
