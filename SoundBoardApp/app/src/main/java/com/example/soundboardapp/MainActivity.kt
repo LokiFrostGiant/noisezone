@@ -66,8 +66,8 @@ fun SoundsCard(sounds: Sounds, modifier: Modifier = Modifier){
             )
             Text(
                 text = LocalContext.current.getString(sounds.stringResourceId),
-                modifier = Modifier.padding(16.dp)
-//                style = MaterialTheme.typography.h6
+                modifier = Modifier.padding(16.dp),
+                style = MaterialTheme.typography.h6
             )
         }
     }

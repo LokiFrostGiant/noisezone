@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Sound Board App</string>
     <string name="android">Android</string>
+    <string name="vine_boom">Vine Boom</string>
+    <string name="bruh">Bruh</string>
+    <string name="ahhh">Ahhh</string>
+    <string name="oof">Oof</string>
 </resources>
