@@ -1,5 +1,6 @@
 package com.example.soundboardapp
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,6 +19,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionContext
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -28,36 +30,37 @@ import androidx.compose.ui.unit.dp
 import com.example.soundboardapp.data.Datasource
 import com.example.soundboardapp.model.Sounds
 import com.example.soundboardapp.ui.theme.SoundBoardAppTheme
+import android.content.Context
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            SoundBoard()
+            SoundBoard(this)
         }
     }
 }
 
 @Composable
-fun SoundBoard() {
+fun SoundBoard(context: Context) {
     SoundBoardAppTheme {
-        SoundsList(soundList = Datasource().loadSounds())
+        SoundsList(soundList = Datasource().loadSounds(), modifier = Modifier,context)
     }
 }
 
 @Composable
-fun SoundsList(soundList: List<Sounds>, modifier: Modifier = Modifier){
+fun SoundsList(soundList: List<Sounds>, modifier: Modifier = Modifier, context: Context){
     LazyColumn {
         items(soundList) { sounds ->
-            SoundsCard(sounds)
+            SoundsCard(sounds, modifier = Modifier, context)
         }
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SoundsCard(sounds: Sounds, modifier: Modifier = Modifier){
+fun SoundsCard(sounds: Sounds, modifier: Modifier = Modifier, context: Context){
     Card(modifier = Modifier.padding(8.dp), elevation = 4.dp) {
         Column {
             Image(
@@ -66,7 +69,8 @@ fun SoundsCard(sounds: Sounds, modifier: Modifier = Modifier){
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(194.dp).combinedClickable {
-
+                        val mp = MediaPlayer.create(context, sounds.soundResourceId)
+                        mp.start()
                     },
                 contentScale = ContentScale.Crop
             )
@@ -83,6 +87,7 @@ fun SoundsCard(sounds: Sounds, modifier: Modifier = Modifier){
 @Composable
 fun DefaultPreview() {
     SoundBoardAppTheme {
-        SoundsCard (Sounds(R.string.android, R.drawable.image1,R.raw.android))
+
+        SoundsCard (Sounds(R.string.android, R.drawable.image1,R.raw.android),modifier = Modifier, LocalContext.current)
     }
 }
