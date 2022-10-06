@@ -31,6 +31,8 @@ import com.example.soundboardapp.data.Datasource
 import com.example.soundboardapp.model.Sounds
 import com.example.soundboardapp.ui.theme.SoundBoardAppTheme
 import android.content.Context
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 
 
 class MainActivity : ComponentActivity() {
@@ -49,9 +51,11 @@ fun SoundBoard(context: Context) {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SoundsList(soundList: List<Sounds>, modifier: Modifier = Modifier, context: Context){
-    LazyColumn {
+    LazyVerticalGrid (cells = GridCells.Adaptive(minSize = 128.dp)) {
+
         items(soundList) { sounds ->
             SoundsCard(sounds, modifier = Modifier, context)
         }
@@ -68,7 +72,8 @@ fun SoundsCard(sounds: Sounds, modifier: Modifier = Modifier, context: Context){
                 contentDescription = stringResource(sounds.stringResourceId),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(194.dp).combinedClickable {
+                    .height(194.dp)
+                    .combinedClickable {
                         val mp = MediaPlayer.create(context, sounds.soundResourceId)
                         mp.start()
                     },
