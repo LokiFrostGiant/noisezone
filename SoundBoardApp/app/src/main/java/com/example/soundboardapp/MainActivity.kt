@@ -81,7 +81,12 @@ fun SoundsCard(sounds: Sounds, modifier: Modifier = Modifier, context: Context){
             )
             Text(
                 text = LocalContext.current.getString(sounds.stringResourceId),
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier
+                    .padding(16.dp)
+                    .combinedClickable {
+                        val mp = MediaPlayer.create(context, sounds.soundResourceId)
+                        mp.start()
+                    },
                 style = MaterialTheme.typography.h6
             )
         }
