@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "975690957356",
+    "project_id": "noisezone-e2294",
+    "storage_bucket": "noisezone-e2294.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975690957356:android:c1b321ee0ccebe771dc789",
+        "android_client_info": {
+          "package_name": "com.example.noisezone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975690957356-7f485oqrjnjgekne189f0cev0l1o46cn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAo45XSPlo76MtGX4UhDKugr7RElBLvDCw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975690957356-7f485oqrjnjgekne189f0cev0l1o46cn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
