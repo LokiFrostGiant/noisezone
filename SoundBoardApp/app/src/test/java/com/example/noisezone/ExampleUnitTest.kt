@@ -1,4 +1,4 @@
-package com.example.soundboardapp
+package com.example.noisezone
 
 import org.junit.Test
 

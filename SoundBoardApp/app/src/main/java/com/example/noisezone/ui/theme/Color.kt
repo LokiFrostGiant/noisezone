@@ -1,4 +1,4 @@
-package com.example.soundboardapp.ui.theme
+package com.example.noisezone.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,6 +1,6 @@
-package com.example.soundboardapp.data
-import com.example.soundboardapp.R
-import com.example.soundboardapp.model.Sounds
+package com.example.noisezone.data
+import com.example.noisezone.R
+import com.example.noisezone.model.Sounds
 
 class Datasource() {
     fun loadSounds(): List<Sounds>{

@@ -7,7 +7,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.soundboardapp"
+        applicationId "com.example.noisezone"
         minSdk 21
         targetSdk 32
         versionCode 1
