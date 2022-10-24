@@ -29,6 +29,8 @@ import com.example.noisezone.ui.theme.SoundBoardAppTheme
 import android.content.Context
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.material.TopAppBar
+import androidx.compose.ui.text.style.TextAlign
 
 
 class MainActivity : ComponentActivity() {
@@ -43,7 +45,23 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun SoundBoard(context: Context) {
     SoundBoardAppTheme {
-        SoundsList(soundList = Datasource().loadSounds(), modifier = Modifier,context)
+        Column {
+            TopBarWithAdd()
+            SoundsList(soundList = Datasource().loadSounds(), modifier = Modifier,context)
+        }
+
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun TopBarWithAdd(){
+    TopAppBar() {
+        Text(
+            text = "noisezone",
+            style = MaterialTheme.typography.h6,
+            textAlign = TextAlign.Center
+        )
     }
 }
 
