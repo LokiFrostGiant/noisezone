@@ -31,7 +31,15 @@ import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.TopAppBar
 import androidx.compose.ui.text.style.TextAlign
+import coil.compose.rememberAsyncImagePainter
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import java.net.URL
 
+private lateinit var database: DatabaseReference
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +77,6 @@ fun TopBarWithAdd(){
 @Composable
 fun SoundsList(soundList: List<Sounds>, modifier: Modifier = Modifier, context: Context){
     LazyVerticalGrid (cells = GridCells.Adaptive(minSize = 128.dp)) {
-
         items(soundList) { sounds ->
             SoundsCard(sounds, modifier = Modifier, context)
         }
@@ -79,10 +86,20 @@ fun SoundsList(soundList: List<Sounds>, modifier: Modifier = Modifier, context: 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SoundsCard(sounds: Sounds, modifier: Modifier = Modifier, context: Context){
+
+    database = Firebase.database.reference
+    //val storageReference = Firebase.storage.reference
+    val db = Firebase.firestore
+    val firebase : DatabaseReference = FirebaseDatabase.getInstance().getReference()
+    val s =  URL("https://firebasestorage.googleapis.com/v0/b/noisezone-e2294.appspot.com/o/sounds%2Fahhh.mp3?alt=media&token=f043f8b6-d133-4d43-9694-0712f25e5854")
+    val i = URL("https://firebasestorage.googleapis.com/v0/b/noisezone-e2294.appspot.com/o/images%2Fimage1.jpg?alt=media&token=0840fc5b-b32a-4614-a8c7-47ce3bba13dd")
+
+    //painter = rememberAsyncImagePainter(sounds.imageResourceId)
+
     Card(modifier = Modifier.padding(8.dp), elevation = 4.dp) {
         Column {
             Image(
-                painter = painterResource(sounds.imageResourceId),
+                painter = rememberAsyncImagePainter(i),
                 contentDescription = stringResource(sounds.stringResourceId),
                 modifier = Modifier
                     .fillMaxWidth()
