@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
     fun dbSetupTest(db : FirebaseFirestore){
 
         var testMap = hashMapOf(
-            "num" to 42424242
+            "num" to 8675309
         )
 
         db.collection("testInt").document("test")
