@@ -41,6 +41,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import java.net.URL
 
 private lateinit var database: DatabaseReference
@@ -124,6 +125,7 @@ class MainActivity : ComponentActivity() {
                 println("Well that failed.")
             }
 
+        var stor = Firebase.storage
 
         println("Test function end. dispNum set to: $dispNum")
     }
@@ -145,11 +147,19 @@ fun SoundBoard(context: Context) {
 @Composable
 fun TopBarWithAdd(){
     TopAppBar() {
-        Text(
-            text = "noisezone $dispNum",
-            style = MaterialTheme.typography.h6,
-            textAlign = TextAlign.Center,
-        )
+        Column {
+            Text(
+                text = "noisezone $dispNum",
+                style = MaterialTheme.typography.h6,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                text = "see look" ,
+                style = MaterialTheme.typography.h6,
+                textAlign = TextAlign.Center
+            )
+
+        }
     }
 }
 
