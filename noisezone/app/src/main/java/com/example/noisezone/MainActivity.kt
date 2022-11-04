@@ -32,6 +32,7 @@ import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.TopAppBar
 import androidx.compose.ui.text.style.TextAlign
 import coil.compose.rememberAsyncImagePainter
+import com.example.noisezone.model.SoundsURL
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -50,34 +51,57 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        database = Firebase.database.reference
-        val db = Firebase.firestore
-        dbSetupTest(db)
-
         setContent {
             SoundBoard(this)
         }
     }
 
-    fun dbSetup(db : FirebaseFirestore){
-        var currSound = Sounds(R.string.android, R.drawable.image1,R.raw.android)
-        var currMap = hashMapOf(
-            "soundObj" to currSound
-        )
-        db.collection("sounds").document("test")
-            .set(currMap)
+    override fun onResume() {
+        super.onResume()
+        database = Firebase.database.reference
+        val db = Firebase.firestore
+        dbSetup(db)
+    }
 
-        val soundsOut = db.collection("sounds").document("713OWWqHmv8OhV8YJpVh")
+    fun dbSetup(db : FirebaseFirestore){
+//        var currSound = Sounds(R.string.android, R.drawable.image1,R.raw.android)
+//        var currMap = hashMapOf(
+//            "soundObj" to currSound
+//        )
+//        db.collection("sounds").document("tests")
+//            .set(currMap)
+
+//        var soundsOut:SoundsURL?=null
+//        = db.collection("sounds").document("tests")
+//            .get()
+//            .result
+//            .toObject<SoundsURL>()
+
+        db.collection("sounds").document("tests")
             .get()
-            .result
-            .toObject<Sounds>()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    println("Document grabbed!")
+                    var soundsOut = document.toObject<SoundsURL>()
+                    println("HEYYYYYYYYYYYYYYYYYYY")
+                    println(soundsOut.toString())
+                } else {
+                    println("It succeeded but also didn't")
+                }
+            }
+            .addOnFailureListener { exception ->
+                println("Well that failed.")
+            }
+
+
+
 
     }
 
     fun dbSetupTest(db : FirebaseFirestore){
 
         var testMap = hashMapOf(
-            "num" to 42424242
+            "num" to 1111
         )
 
         db.collection("testInt").document("test")
