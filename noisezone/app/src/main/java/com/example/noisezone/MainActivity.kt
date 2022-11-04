@@ -41,12 +41,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import java.net.URL
 
 private lateinit var database: DatabaseReference
-lateinit var currCard : Sounds
-var dispNum : Long = 9001
+private var dispNum : Long = 9001
+private var image : String = "";
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,26 +64,18 @@ class MainActivity : ComponentActivity() {
     }
 
     fun dbSetup(db : FirebaseFirestore){
-//        var currSound = Sounds(R.string.android, R.drawable.image1,R.raw.android)
-//        var currMap = hashMapOf(
-//            "soundObj" to currSound
-//        )
-//        db.collection("sounds").document("tests")
-//            .set(currMap)
-
-//        var soundsOut:SoundsURL?=null
-//        = db.collection("sounds").document("tests")
-//            .get()
-//            .result
-//            .toObject<SoundsURL>()
-
         db.collection("sounds").document("tests")
             .get()
             .addOnSuccessListener { document ->
                 if (document != null) {
                     println("Document grabbed!")
                     var soundsOut = document.toObject<SoundsURL>()
-                    println("HEYYYYYYYYYYYYYYYYYYY")
+                    if (soundsOut != null) {
+                        image = soundsOut.image
+                        setContent {
+                            SoundBoard(this)
+                        }
+                    }
                     println(soundsOut.toString())
                 } else {
                     println("It succeeded but also didn't")
@@ -93,10 +84,6 @@ class MainActivity : ComponentActivity() {
             .addOnFailureListener { exception ->
                 println("Well that failed.")
             }
-
-
-
-
     }
 
     fun dbSetupTest(db : FirebaseFirestore){
@@ -125,8 +112,6 @@ class MainActivity : ComponentActivity() {
                 println("Well that failed.")
             }
 
-        var stor = Firebase.storage
-
         println("Test function end. dispNum set to: $dispNum")
     }
 }
@@ -139,7 +124,6 @@ fun SoundBoard(context: Context) {
             SoundsList(soundList = Datasource().loadSounds(), modifier = Modifier,context)
             //SoundsList(soundList = listOf(currCard), modifier = Modifier,context)
         }
-
     }
 }
 
@@ -153,12 +137,6 @@ fun TopBarWithAdd(){
                 style = MaterialTheme.typography.h6,
                 textAlign = TextAlign.Center
             )
-            Text(
-                text = "see look" ,
-                style = MaterialTheme.typography.h6,
-                textAlign = TextAlign.Center
-            )
-
         }
     }
 }
@@ -176,20 +154,15 @@ fun SoundsList(soundList: List<Sounds>, modifier: Modifier = Modifier, context: 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SoundsCard(sounds: Sounds, modifier: Modifier = Modifier, context: Context){
-
-
-    //val storageReference = Firebase.storage.reference
-
     val firebase : DatabaseReference = FirebaseDatabase.getInstance().getReference()
-    val s =  URL("https://firebasestorage.googleapis.com/v0/b/noisezone-e2294.appspot.com/o/sounds%2Fahhh.mp3?alt=media&token=f043f8b6-d133-4d43-9694-0712f25e5854")
-    val i = URL("https://firebasestorage.googleapis.com/v0/b/noisezone-e2294.appspot.com/o/images%2Fimage1.jpg?alt=media&token=0840fc5b-b32a-4614-a8c7-47ce3bba13dd")
 
-    //painter = rememberAsyncImagePainter(sounds.imageResourceId)
+    //painter = rememberAsyncImagePainter()
+    //painter = painterResource(sounds.imageResourceId)
 
     Card(modifier = Modifier.padding(8.dp), elevation = 4.dp) {
         Column {
             Image(
-                painter = painterResource(sounds.imageResourceId),
+                painter = rememberAsyncImagePainter(image),
                 contentDescription = stringResource(sounds.stringResourceId),
                 modifier = Modifier
                     .fillMaxWidth()
